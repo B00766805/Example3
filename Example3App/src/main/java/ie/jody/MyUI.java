@@ -49,15 +49,33 @@ public class MyUI extends UI {
               "loginTimeout=30;";
              
 
-        final HorizontalLayout layout = new HorizontalLayout();
+        final VerticalLayout layout = new VerticalLayout();
 
         try 
         {
             // Connect with JDBC driver to a database
             connection = DriverManager.getConnection(connectionString);
+
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM customerTable;");
+        // Convert the resultset that comes back into a List - we need a Java class to represent the data (Customer.java in this case)
+        List<Customer> customers = new ArrayList<Customer>();
+        // While there are more records in the resultset
+        while(rs.next())
+        {   
+	// Add a new Customer instantiated with the fields from the record (that we want, we might not want all the fields, note how I skip the id)
+	customers.add(new Customer(rs.getString("first_name"), 
+				rs.getString("last_name"), 
+				rs.getBoolean("paid"), 
+				rs.getDouble("amount")));
+}
             // Add a label to the web app with the message and name of the database we connected to 
-            layout.addComponent(new Label("Connected to database: " + connection.getCatalog()));
+            //layout.addComponent(new Label("Connected to database: " + connection.getCatalog()));
+
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM customerTable WHERE paid = 'false' ORDER BY AMOUNT DESC;");
+            while(rs.next()){
+	layout.addComponent(new Label(rs.getString("first_name") + " " + rs.getString("last_name") + " has not paid " + rs.getDouble("amount")));  
         } 
+    }
         catch (Exception e) 
         {
             // This will show an error message if something went wrong
