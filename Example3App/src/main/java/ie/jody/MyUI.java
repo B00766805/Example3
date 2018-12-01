@@ -3,6 +3,8 @@ package ie.jody;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.sql.*;
+
 import javax.print.attribute.TextSyntax;
 import javax.servlet.annotation.WebServlet;
 
@@ -35,7 +37,34 @@ public class MyUI extends UI {
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
+        Connection connection = null;
+        
+        String connectionString = "jdbc:sqlserver://databaseforclass.database.windows.net:1433;" + 
+			  "database=classdatabase;" + 
+			  "user=jody@databaseforclass;" + 
+			  "password=DataBaseForClass1;" + 
+			  "encrypt=true;" + 
+			  "trustServerCertificate=false;" + 
+			  "hostNameInCertificate=*.database.windows.net;" +
+              "loginTimeout=30;";
+             
+
         final HorizontalLayout layout = new HorizontalLayout();
+
+        try 
+        {
+            // Connect with JDBC driver to a database
+            connection = DriverManager.getConnection(connectionString);
+            // Add a label to the web app with the message and name of the database we connected to 
+            layout.addComponent(new Label("Connected to database: " + connection.getCatalog()));
+        } 
+        catch (Exception e) 
+        {
+            // This will show an error message if something went wrong
+            layout.addComponent(new Label(e.getMessage()));
+        }
+        setContent(layout);
+
         Label logo = new Label("<H1>Staff Details</H1> <p/> <h3>Please enter the staff details and click Book</h3><br>", ContentMode.HTML);
       
         TextField staffNumber = new TextField("Staff Number");
