@@ -1,6 +1,5 @@
 package ie.jody;
-
-class Customer
+Class Customer
 {
     private String first_name;
     private String last_name;
