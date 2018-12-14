@@ -39,14 +39,11 @@ public class MyUI extends UI {
         // Create the connection object
     Connection connection = null;  
 
-        String connectionString = "jdbc:sqlserver://.database.windows.net:1433;" + 
-			  "database=classdatabase;" + 
-			  "user=jody@databaseforclass;" + 
-			  "password=DataBaseForClass1;" + 
-			  "encrypt=true;" + 
-			  "trustServerCertificate=false;" + 
-			  "hostNameInCertificate=*.database.windows.net;" +
-              "loginTimeout=30;";
+        String connectionString = "jdbc:sqlserver://databaseforclass.database.windows.net:1433;" +
+        "database=classdatabase;user=jody@databaseforclass;password=DataBaseForClass1;" +
+        "encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;" +
+        "loginTimeout=30;jdbc:sqlserver://.database.windows.net:1433;";
+			  
               //jdbc:sqlserver://databaseforclass.database.windows.net:1433;database=classdatabase;user=jody@databaseforclass;password={your_password_here};encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
 
     
